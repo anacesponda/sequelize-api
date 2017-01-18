@@ -1,13 +1,13 @@
 'use strict';
 
-const Products = require('./lib');
+const Units = require('./lib/Unit');
 
-const products = new Products();
+const units = new Units();
 
 /**
  * @swagger
  * definition:
- *   Product:
+ *   Unit:
  *     type: object
  *     required:
  *       - title
@@ -24,27 +24,27 @@ const products = new Products();
 module.exports = (app) => {
   /**
    * @swagger
-   * /v1/products:
+   * /v1/units:
    *   post:
-   *     summary: Add a product
-   *     description: Add a product as a JSON object
+   *     summary: Add a unit
+   *     description: Add a unit as a JSON object
    *     tags:
-   *       - Products
+   *       - Units
    *     produces:
    *       - application/json
    *     parameters:
    *       - in: body
    *         name: body
-   *         description: "Product object that needs to be added to the store"
+   *         description: "Unit object that needs to be added to the store"
    *         required: true
    *         schema:
-   *           "$ref": "#/definitions/Product"
+   *           "$ref": "#/definitions/Unit"
    *     responses:
    *       200:
    *         description: "successful operation"
    */
-  app.post('/v1/products', (req, res) => {
-    products
+  app.post('/v1/units', (req, res) => {
+    units
       .add(req.body)
       .then((data) => {
         res.send(data);
@@ -56,12 +56,12 @@ module.exports = (app) => {
 
   /**
    * @swagger
-   * /v1/products:
+   * /v1/units:
    *   get:
-   *     summary: List all products
-   *     description: List all products as an JSON array
+   *     summary: List all units
+   *     description: List all units as an JSON array
    *     tags:
-   *       - Products
+   *       - Units
    *     produces:
    *       - application/json
    *     responses:
@@ -70,10 +70,10 @@ module.exports = (app) => {
    *         schema:
    *           type: array
    *           items:
-   *             "$ref": "#/definitions/Product"
+   *             "$ref": "#/definitions/Unit"
    */
-  app.get('/v1/products', (req, res) => {
-    products
+  app.get('/v1/units', (req, res) => {
+    units
       .list()
       .then((data) => {
         res.send(data);
@@ -85,32 +85,32 @@ module.exports = (app) => {
 
   /**
    * @swagger
-   * /v1/products/{id}:
+   * /v1/units/{id}:
    *   get:
-   *     summary: Get a product
-   *     description: Get a product
+   *     summary: Get a unit
+   *     description: Get a unit
    *     tags:
-   *       - Products
+   *       - Units
    *     produces:
    *       - application/json
    *     parameters:
    *       - name: id
    *         in: path
-   *         description: "product id"
+   *         description: "unit id"
    *         required: true
    *         type: integer
    *     responses:
    *       200:
    *         description: "successful operation"
    *         schema:
-   *           "$ref": "#/definitions/Product"
+   *           "$ref": "#/definitions/Unit"
    *       404:
    *         description: "not found"
    *       400:
    *         description: "bad request"
    */
-  app.get('/v1/products/:id', (req, res) => {
-    products
+  app.get('/v1/units/:id', (req, res) => {
+    units
       .get(req.params.id)
       .then((data) => {
         if (data <= 0) {
@@ -126,16 +126,16 @@ module.exports = (app) => {
 
   /**
    * @swagger
-   * /v1/products/{id}:
+   * /v1/units/{id}:
    *   delete:
-   *     summary: Removes a product
-   *     description: Removes a product
+   *     summary: Removes a unit
+   *     description: Removes a unit
    *     tags:
-   *       - Products
+   *       - Units
    *     parameters:
    *       - name: id
    *         in: path
-   *         description: "product id"
+   *         description: "unit id"
    *         required: true
    *         type: integer
    *     produces:
@@ -148,8 +148,8 @@ module.exports = (app) => {
    *       400:
    *         description: "bad request"
    */
-  app.delete('/v1/products/:id', (req, res) => {
-    products
+  app.delete('/v1/units/:id', (req, res) => {
+    units
       .remove(req.params.id)
       .then((data) => {
         if (data <= 0) {
@@ -167,24 +167,24 @@ module.exports = (app) => {
 
   /**
    * @swagger
-   * /v1/products/{id}:
+   * /v1/units/{id}:
    *   patch:
-   *     summary: Update a product
-   *     description: Update a product
+   *     summary: Update a unit
+   *     description: Update a unit
    *     tags:
-   *       - Products
+   *       - Units
    *     parameters:
    *       - name: id
    *         in: path
-   *         description: "product id"
+   *         description: "unit id"
    *         required: true
    *         type: integer
    *       - in: body
    *         name: body
-   *         description: "Product object that needs to be added to the store"
+   *         description: "Unit object that needs to be added to the store"
    *         required: true
    *         schema:
-   *           "$ref": "#/definitions/Product"
+   *           "$ref": "#/definitions/Unit"
    *     produces:
    *       - application/json
    *     responses:
@@ -195,8 +195,8 @@ module.exports = (app) => {
    *       400:
    *         description: "bad request"
    */
-  app.patch('/v1/products/:id', (req, res) => {
-    products
+  app.patch('/v1/units/:id', (req, res) => {
+    units
       .update(req.params.id, req.body)
       .then((data) => {
         if (data <= 0) {

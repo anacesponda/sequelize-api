@@ -10,7 +10,9 @@ const app        = express();
 
 app.set('view engine', 'html');
 app.set('views', 'public');
-app.set('port', config.api.port);
+app.set('port', process.env.PORT);
+
+console.log('PORT', process.env.PORT);
 
 // database
 db.sequelize.sync({ force : config.db.wipe }).then(() => {
@@ -33,14 +35,12 @@ app.use((req, res, next) => {
 });
 
 // init swagger
-if (config.environment === 'local' || config.environment === 'dev') {
+//if (config.environment === 'local' || config.environment === 'dev') {
   swagger(app);
-}
+//}
 
 // init server
-app.listen(config.api.port, () => {
-  console.log(`listening on port ${config.api.port}`); // eslint-disable-line no-console
-});
+app.listen(process.env.PORT);
 
 // load API routes
 require('./app/controllers')(app);

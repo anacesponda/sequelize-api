@@ -1,0 +1,12 @@
+environment: prod
+api:
+  port: 3001
+db:
+  username: srwwuikvcpnijn
+  password: 390a8d3b4e31eff7db1e1e03a1d780cd38f88805228894d9ba01dd93306d20cc
+  database: d7fvriplc1k83d
+  dialect: postgres
+  host: ec2-54-221-255-153.compute-1.amazonaws.com
+  wipe: false
+  logging: false
+

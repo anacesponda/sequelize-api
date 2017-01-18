@@ -2,8 +2,9 @@ environment: local
 api:
   port: 5000
 db:
-  username: devdb
-  password: qwerty123
+  username: postgres
+  password: monona13
+  dialect: postgres
   database: devdb
-  host: localhost
-  wipe: true
+  host: 127.0.0.1
+  wipe: false

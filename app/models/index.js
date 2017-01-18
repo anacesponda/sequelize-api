@@ -1,30 +1,38 @@
-'use strict';
+"use strict";
 
-const Sequelize = require('sequelize');
+var fs        = require("fs");
+var path      = require("path");
+var Sequelize = require("sequelize");
 const appRoot   = require('app-root-path');
-const walkSync = require('walk-sync');
-
 const config = require(`${appRoot}/lib/config`)();
-
-const db = {};
 
 const sequelize = new Sequelize(config.db);
 
-const paths = walkSync(`${appRoot}/app/models`, {
-  globs  : ['**/*.js'],
-  ignore : ['index.js']
+
+var db        = {};
+
+fs
+    .readdirSync(__dirname)
+    .filter(function(file) {
+        return (file.indexOf(".") !== 0) && (file !== "index.js");
+    })
+    .forEach(function(file) {
+        var model = sequelize.import(path.join(__dirname, file));
+        db[model.name] = model;
+    });
+
+console.log(db);
+
+Object.keys(db).forEach(function(modelName) {
+    if ("associate" in db[modelName]) {
+        console.log('SE ASOCIA :  ' + modelName  + db)
+        db[modelName].associate(db);
+        console.log("MODELO" + db[modelName]);
+    }
 });
 
-paths.forEach((file) => {
-  const model    = sequelize.import(`${appRoot}/app/models/${file}`);
-  db[model.name] = model;
-});
-
-Object.keys(db).forEach((modelName) => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
-});
+// db['Page'].belongsTo(db['Unit']);
+// db['Unit'].hasMany(db['Page'], {as: 'Pages'})
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

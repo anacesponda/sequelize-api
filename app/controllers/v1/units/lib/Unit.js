@@ -6,18 +6,19 @@ const db      = require(`${appRoot}/app/models`);
 const Promise = require('bluebird');
 
 /**
- * Class that represents products orchestration trough database
+ * Class that represents units orchestration trough database
  */
-class Products {
+class Units {
   /**
-   * Adds a product to database
+   * Adds a unit to database
    *
-   * @param {Object} product - product JSON object
+   * @param {Object} unit - unit JSON object
    */
-  add(product) {
+  add(unit){
+
     return new Promise((resolve, reject) => {
-      db.Product
-        .create(product)
+      db.Unit
+        .create(unit)
         .then((res) => {
           resolve(res);
         })
@@ -28,39 +29,47 @@ class Products {
   }
 
   /**
-   * List all products from database
+   * List all units from database
    *
    * @returns {Array}
    */
   list() {
     return new Promise((resolve, reject) => {
-      db.Product
-        .findAll()
+      db.Unit
+        .findAll({include: [{model: db.Page, as: 'Pages'}]})
         .then((res) => {
+          console.log(res);
+
           resolve(res);
+
         })
         .catch((error) => {
+          console.log("errrooor:" + error);
           reject(error);
         });
     });
   }
 
   /**
-   * Get a specific product
+   * Get a specif
+   * ic unit
    *
-   * @param {Integer} id - product id
+   * @param {Integer} id - unit id
    * @returns {Object}
    */
-  get(productId) {
+  get(unitId) {
     return new Promise((resolve, reject) => {
-      db.Product
+      db.Unit
         .findOne({
           where : {
-            id : productId
-          }
+            id : unitId
+          },
+          include: [{model: db.Page, as: 'Pages'}]
         })
         .then((res) => {
           resolve(res);
+          res.getPages().then((res) => {console.log("PAGES============>" + res)});
+          console.log(res);
         })
         .catch((error) => {
           reject(error);
@@ -69,16 +78,16 @@ class Products {
   }
 
   /**
-   * Removes a product from database
+   * Removes a unit from database
    *
-   * @param {Integer} id - product id
+   * @param {Integer} id - unit id
    */
-  remove(productId) {
+  remove(unitId) {
     return new Promise((resolve, reject) => {
-      db.Product
+      db.Unit
         .destroy({
           where : {
-            id : productId
+            id : unitId
           }
         })
         .then((res) => {
@@ -91,16 +100,16 @@ class Products {
   }
 
   /**
-   * Update a specific product on database
+   * Update a specific unit on database
    *
-   * @param {Integer} id - product id
+   * @param {Integer} id - unit id
    */
-  update(productId, data) {
+  update(unitId, data) {
     return new Promise((resolve, reject) => {
-      db.Product
+      db.Unit
         .update(data, {
           where : {
-            id : productId
+            id : unitId
           }
         })
         .then((res) => {
@@ -113,4 +122,4 @@ class Products {
   }
 }
 
-module.exports = Products;
+module.exports = Units;
