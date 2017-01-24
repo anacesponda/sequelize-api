@@ -64,7 +64,7 @@ class Units {
           where : {
             id : unitId
           },
-          include: [{model: db.Page, as: 'Pages'}]
+          include: [{model: db.Page, as: 'Pages', order: ['number', 'ASC']}]
         })
         .then((res) => {
           resolve(res);

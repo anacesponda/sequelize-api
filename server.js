@@ -10,7 +10,7 @@ const app        = express();
 
 app.set('view engine', 'html');
 app.set('views', 'public');
-app.set('port', process.env.PORT);
+app.set('port', process.env.PORT || 5000);
 
 console.log('PORT', process.env.PORT);
 
@@ -40,7 +40,7 @@ app.use((req, res, next) => {
 //}
 
 // init server
-app.listen(process.env.PORT);
+app.listen(process.env.PORT || 5000);
 
 // load API routes
 require('./app/controllers')(app);

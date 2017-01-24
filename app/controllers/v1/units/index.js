@@ -16,9 +16,9 @@ const units = new Units();
  *     properties:
  *       title:
  *         type: string
- *       category:
+ *       description:
  *         type: string
- *       price:
+ *       number:
  *         type: integer
  */
 module.exports = (app) => {

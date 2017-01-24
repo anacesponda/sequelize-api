@@ -29,6 +29,8 @@ class Pages {
                 title: page.title,
                 UnitId: page.UnitId,
                 number: page.number,
+                comments: page.comments,
+                templateType: page.templateType,
                 pageObject: page.pageObject
             })
             .then((res) => {

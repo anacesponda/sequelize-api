@@ -9,17 +9,17 @@ const pages = new Pages();
  * definition:
  *   Page:
  *     type: object
- *     required:
- *       - title
- *       - category
- *       - price
  *     properties:
  *       title:
  *         type: string
- *       category:
- *         type: string
- *       price:
+ *       number:
  *         type: integer
+ *       templateType:
+ *         type: string
+ *       pageObject:
+ *         type: string
+ *       comments:
+ *         type: string
  */
 module.exports = (app) => {
   /**

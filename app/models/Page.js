@@ -5,7 +5,7 @@ module.exports = function(sequelize, DataTypes) {
         title: DataTypes.STRING,
         number: DataTypes.INTEGER,
         templateType: DataTypes.STRING,
-        pageObject: DataTypes.STRING,
+        pageObject: DataTypes.TEXT,
         comments: DataTypes.STRING,
     }, {
         classMethods: {
